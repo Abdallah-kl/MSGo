@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>فريق الكابتن محمد سامي - تقييم اللياقة البدنية</title>
+    <style>
+        :root {
+            --primary: #3498db;
+            --secondary: #2ecc71;
+            --accent: #e74c3c;
+            --dark: #2c3e50;
+            --light: #ecf0f1;
+        }
+        
+        body {
+            font-family: 'Tajawal', Arial, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(to right, var(--dark), var(--primary));
+            color: white;
+            padding: 25px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .header h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+        
+        .header p {
+            margin: 10px 0 0;
+            opacity: 0.9;
+        }
+        
+        .form-body {
+            padding: 25px;
+        }
+        
+        .section {
+            margin-bottom: 30px;
+            border-bottom: 1px dashed #eee;
+            padding-bottom: 20px;
+        }
+        
+        .section:last-child {
+            border-bottom: none;
+        }
+        
+        .section-title {
+            color: var(--dark);
+            font-size: 20px;
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+            border-bottom: 2px solid var(--secondary);
+            display: inline-block;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: var(--dark);
+        }
+        
+        input[type="text"],
+        input[type="number"],
+        input[type="email"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s;
+            box-sizing: border-box;
+        }
+        
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+            outline: none;
+        }
+        
+        .radio-group, .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .radio-option, .checkbox-option {
+            display: flex;
+            align-items: center;
+        }
+        
+        .radio-option input, .checkbox-option input {
+            margin-left: 8px;
+        }
+        
+        .file-upload {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .file-upload-btn {
+            background-color: var(--light);
+            color: var(--dark);
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            border: 1px dashed #aaa;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        
+        .file-upload-btn:hover {
+            background-color: #ddd;
+        }
+        
+        .submit-btn {
+            background: linear-gradient(to right, var(--secondary), var(--primary));
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: block;
+            width: 100%;
+            margin-top: 30px;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(46, 204, 113, 0.4);
+        }
+        
+        .result-section {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            display: none;
+        }
+        
+        .result-title {
+            color: var(--accent);
+            margin-top: 0;
+        }
+        
+        .export-options {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            gap: 10px;
+        }
+        
+        .export-btn {
+            flex: 1;
+            padding: 10px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .export-excel {
+            background-color: #2ecc71;
+            color: white;
+        }
+        
+        .export-email {
+            background-color: #3498db;
+            color: white;
+        }
+        
+        .export-share {
+            background-color: #9b59b6;
+            color: white;
+        }
+        
+        .export-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+        
+        @media (max-width: 768px) {
+            .export-options {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>فريق الكابتن محمد سامي</h1>
+            <p>نموذج تقييم اللياقة البدنية الشامل</p>
+        </div>
+        
+        <div class="form-body">
+            <form id="fitnessForm">
+                <div class="section">
+                    <h2 class="section-title">المعلومات الأساسية</h2>
+                    
+                    <div class="form-group">
+                        <label for="name">الاسم الكامل</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="age">العمر</label>
+                        <input type="number" id="age" name="age" min="10" max="100" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="weight">الوزن (كجم)</label>
+                        <input type="number" id="weight" name="weight" step="0.1" min="30" max="200" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="height">الطول (سم)</label>
+                        <input type="number" id="height" name="height" min="100" max="250" required>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h2 class="section-title">الحالة الصحية</h2>
+                    
+                    <div class="form-group">
+                        <label>هل يوجد مشاكل في المفاصل؟</label>
+                        <div class="radio-group">
+                            <div class="radio-option">
+                                <input type="radio" id="joints_yes" name="joints" value="yes">
+                                <label for="joints_yes">نعم</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="joints_no" name="joints" value="no" checked>
+                                <label for="joints_no">لا</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group" id="jointsDetails" style="display: none;">
+                        <label for="jointsDescription">إذا نعم، يرجى توضيح المشكلة</label>
+                        <textarea id="jointsDescription" name="jointsDescription" rows="3"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>هل يوجد مشاكل في العضلات؟</label>
+                        <div class="radio-group">
+                            <div class="radio-option">
+                                <input type="radio" id="muscles_yes" name="muscles" value="yes">
+                                <label for="muscles_yes">نعم</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="muscles_no" name="muscles" value="no" checked>
+                                <label for="muscles_no">لا</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group" id="musclesDetails" style="display: none;">
+                        <label for="musclesDescription">إذا نعم، يرجى توضيح المشكلة</label>
+                        <textarea id="musclesDescription" name="musclesDescription" rows="3"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>هل هناك أمراض عضوية؟</label>
+                        <div class="radio-group">
+                            <div class="radio-option">
+                                <input type="radio" id="diseases_yes" name="diseases" value="yes">
+                                <label for="diseases_yes">نعم</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="diseases_no" name="diseases" value="no" checked>
+                                <label for="diseases_no">لا</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group" id="diseasesDetails" style="display: none;">
+                        <label for="diseasesDescription">إذا نعم، يرجى ذكر الأمراض</label>
+                        <textarea id="diseasesDescription" name="diseasesDescription" rows="3"></textarea>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h2 class="section-title">الهدف من التمرين</h2>
+                    
+                    <div class="form-group">
+                        <label for="goal">اختر هدفك الأساسي</label>
+                        <select id="goal" name="goal" required>
+                            <option value="" disabled selected>اختر هدفك</option>
+                            <option value="weight_loss">خسارة الوزن</option>
+                            <option value="muscle_gain">بناء العضلات</option>
+                            <option value="fitness">تحسين اللياقة العامة</option>
+                            <option value="rehabilitation">إعادة تأهيل</option>
+                            <option value="competition">التحضير للمنافسات</option>
+                            <option value="other">أخرى</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group" id="goalDetails" style="display: none;">
+                        <label for="goalDescription">يرجى توضيح الهدف</label>
+                        <textarea id="goalDescription" name="goalDescription" rows="3"></textarea>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h2 class="section-title">الملفات المطلوبة</h2>
+                    
+                    <div class="form-group">
+                        <label>صور التحاليل الطبية</label>
+                        <div class="file-upload">
+                            <input type="file" id="tests" name="tests" accept="image/*" multiple>
+                            <div class="file-upload-btn" onclick="document.getElementById('tests').click()">اختر ملفات</div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>صور جسم المتدرب (8 صور من زوايا مختلفة)</label>
+                        <div class="file-upload">
+                            <input type="file" id="bodyPhotos" name="bodyPhotos" accept="image/*" multiple>
+                            <div class="file-upload-btn" onclick="document.getElementById('bodyPhotos').click()">اختر ملفات</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <button type="button" class="submit-btn" onclick="calculateResults()">حساب النتائج</button>
+                
+                <div class="result-section" id="resultSection">
+                    <h3 class="result-title">نتائج التقييم</h3>
+                    <div id="bmiResult"></div>
+                    <div id="effortLevel"></div>
+                    <div id="recommendations"></div>
+                    
+                    <div class="export-options">
+                        <button type="button" class="export-btn export-excel">تصدير إلى Excel</button>
+                        <button type="button" class="export-btn export-email">إرسال إلى البريد الإلكتروني</button>
+                        <button type="button" class="export-btn export-share">مشاركة النموذج</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <script>
+        // Show/hide details based on radio button selection
+        document.getElementById('joints_yes').addEventListener('change', function() {
+            document.getElementById('jointsDetails').style.display = this.checked ? 'block' : 'none';
+        });
+        
+        document.getElementById('muscles_yes').addEventListener('change', function() {
+            document.getElementById('musclesDetails').style.display = this.checked ? 'block' : 'none';
+        });
+        
+        document.getElementById('diseases_yes').addEventListener('change', function() {
+            document.getElementById('diseasesDetails').style.display = this.checked ? 'block' : 'none';
+        });
+        
+        document.getElementById('goal').addEventListener('change', function() {
+            document.getElementById('goalDetails').style.display = this.value === 'other' ? 'block' : 'none';
+        });
+        
+        // Calculate results function
+        function calculateResults() {
+            // Get form values
+            const age = parseInt(document.getElementById('age').value);
+            const weight = parseFloat(document.getElementById('weight').value);
+            const height = parseInt(document.getElementById('height').value) / 100; // convert to meters
+            const hasJointProblems = document.getElementById('joints_yes').checked;
+            const hasMuscleProblems = document.getElementById('muscles_yes').checked;
+            const hasDiseases = document.getElementById('diseases_yes').checked;
+            const goal = document.getElementById('goal').value;
+            
+            // Calculate BMI
+            const bmi = weight / (height * height);
+            let bmiCategory = '';
+            
+            if (bmi < 18.5) {
+                bmiCategory = 'نقص في الوزن';
+            } else if (bmi >= 18.5 && bmi < 25) {
+                bmiCategory = 'وزن طبيعي';
+            } else if (bmi >= 25 && bmi < 30) {
+                bmiCategory = 'زيادة في الوزن';
+            } else {
+                bmiCategory = 'سمنة';
+            }
+            
+            // Calculate effort level (simplified example)
+            let effortLevel = 'متوسط';
+            let recommendations = '';
+            
+            if (hasJointProblems || hasMuscleProblems || hasDiseases) {
+                effortLevel = 'منخفض (يتطلب تمارين خاصة)';
+                recommendations = 'يوصى ببرنامج تدريبي خاص تحت إشراف طبي مع التركيز على التمارين العلاجية.';
+            } else if (bmi >= 30) {
+                effortLevel = 'مرتفع تدريجياً';
+                recommendations = 'يوصى ببرنامج تدريبي متدرج يبدأ بتمارين خفيفة مع التركيز على حرق الدهون.';
+            } else if (goal === 'muscle_gain') {
+                effortLevel = 'مرتفع';
+                recommendations = 'يوصى ببرنامج تدريبي مكثف مع نظام غذائي عالي البروتين لبناء العضلات.';
+            } else if (goal === 'weight_loss') {
+                effortLevel = 'متوسط إلى مرتفع';
+                recommendations = 'يوصى بتمارين الكارديو وتمارين المقاومة مع نظام غذائي منخفض السعرات.';
+            } else {
+                effortLevel = 'متوسط';
+                recommendations = 'يوصى ببرنامج متوازن يشمل تمارين القوة والكارديو والمرونة.';
+            }
+            
+            // Display results
+            document.getElementById('bmiResult').innerHTML = `
+                <p><strong>مؤشر كتلة الجسم (BMI):</strong> ${bmi.toFixed(1)} - ${bmiCategory}</p>
+            `;
+            
+            document.getElementById('effortLevel').innerHTML = `
+                <p><strong>مستوى المجهود البدني المقترح:</strong> ${effortLevel}</p>
+            `;
+            
+            document.getElementById('recommendations').innerHTML = `
+                <p><strong>التوصيات:</strong> ${recommendations}</p>
+            `;
+            
+            // Show results section
+            document.getElementById('resultSection').style.display = 'block';
+            
+            // Scroll to results
+            document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Export functions (placeholder - would need backend integration)
+        document.querySelector('.export-excel').addEventListener('click', function() {
+            alert('سيتم تصدير البيانات إلى ملف Excel. تحتاج هذه الوظيفة إلى تكامل مع الخلفية.');
+        });
+        
+        document.querySelector('.export-email').addEventListener('click', function() {
+            alert('سيتم إرسال البيانات إلى البريد الإلكتروني: Robinhoodabd@gmail.com. تحتاج هذه الوظيفة إلى تكامل مع الخلفية.');
+        });
+        
+        document.querySelector('.export-share').addEventListener('click', function() {
+            alert('سيتم مشاركة النموذج عبر الإنترنت. تحتاج هذه الوظيفة إلى تكامل مع الخلفية.');
+        });
+    </script>
+</body>
+</html>
